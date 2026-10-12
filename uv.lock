@@ -898,6 +898,7 @@ name = "png2svg"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "mypy" },
     { name = "pillow" },
 ]
 
@@ -911,7 +912,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "pillow", specifier = ">=12.3.0" }]
+requires-dist = [
+    { name = "mypy", specifier = ">=2.4.0" },
+    { name = "pillow", specifier = ">=12.3.0" },
+]
 
 [package.metadata.requires-dev]
 dev = [
