@@ -1,5 +1,6 @@
 import pytest
 from PIL import Image
+from pathlib import Path
 from png2svg.sampling import average_hexagon_color, load_image
 
 
@@ -13,6 +14,12 @@ def test_load_image_returns_rgb_image(tmp_path):
     assert image.size == (10, 10)
     assert image.getpixel((0, 0)) == (255, 0, 0)
 
+def test_load_real_png_image():
+    image_path = Path("examples/sample.png")
+    image = load_image(image_path)
+    assert image.mode == "RGB"
+    assert image.width > 0
+    assert image.height > 0
 
 def test_average_color_of_uniform_hexagon():
     image = Image.new("RGB", (20, 20), (100, 150, 200))
