@@ -15,7 +15,7 @@ def test_load_image_returns_rgb_image(tmp_path):
     assert image.getpixel((0, 0)) == (255, 0, 0)
 
 def test_load_real_png_image():
-    image_path = Path("examples/sample.png")
+    image_path = Path("examples/sample.jpg")
     image = load_image(image_path)
     assert image.mode == "RGB"
     assert image.width > 0

@@ -50,8 +50,8 @@ def average_hexagon_color(
                 blue_total += blue
                 pixel_count += 1
 
-            if pixel_count == 0:
-                raise ValueError("No image pixels fall inside the hexagon.")
+    if pixel_count == 0:
+        raise ValueError("No image pixels fall inside the hexagon.")
 
     return (
         round(red_total / pixel_count),
