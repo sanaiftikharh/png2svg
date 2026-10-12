@@ -1,6 +1,8 @@
+from pathlib import Path
+
 import pytest
 from PIL import Image
-from pathlib import Path
+
 from png2svg.sampling import average_hexagon_color, load_image
 
 
