@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import cast
 
 from PIL import Image
 
@@ -44,7 +45,8 @@ def average_hexagon_color(
                 and dy <= (3**0.5) * radius / 2
                 and dx + dy / (3**0.5) <= radius
             ):
-                red, green, blue = rgb_image.getpixel((x, y))
+                pixel = cast(tuple[int, int, int], rgb_image.getpixel((x, y)))
+                red, green, blue = pixel
                 red_total += red
                 green_total += green
                 blue_total += blue
