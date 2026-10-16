@@ -13,3 +13,9 @@ wheels/
 #Others
 .coverage
 coverage.xml
+
+# Manual testing scripts
+scripts/
+
+# Generated SVG files
+output/
