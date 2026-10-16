@@ -1,4 +1,3 @@
-
 import sys
 from pathlib import Path
 
@@ -9,26 +8,20 @@ from png2svg.cli import build_parser, main
 
 
 def test_parser_accepts_input_and_output_paths() -> None:
-    args = build_parser().parse_args(
-        ["input.png", "output.svg"]
-    )
+    args = build_parser().parse_args(["input.png", "output.svg"])
 
     assert args.input_path == Path("input.png")
     assert args.output_path == Path("output.svg")
 
 
 def test_parser_accepts_custom_radius() -> None:
-    args = build_parser().parse_args(
-        ["input.png", "output.svg", "--radius", "5"]
-    )
+    args = build_parser().parse_args(["input.png", "output.svg", "--radius", "5"])
 
     assert args.radius == 5.0
 
 
 def test_parser_uses_default_radius() -> None:
-    args = build_parser().parse_args(
-        ["input.png", "output.svg"]
-    )
+    args = build_parser().parse_args(["input.png", "output.svg"])
 
     assert args.radius == 10.0
 
