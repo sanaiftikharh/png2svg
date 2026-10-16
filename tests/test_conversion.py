@@ -1,4 +1,3 @@
-
 from xml.etree import ElementTree as ET
 
 import pytest
@@ -31,11 +30,7 @@ def test_conversion_generates_colored_hexagons(tmp_path) -> None:
     convert_image_to_svg(input_path, output_path, radius=5)
 
     root = ET.parse(output_path).getroot()
-    polygons = [
-        element
-        for element in root.iter()
-        if element.tag.endswith("polygon")
-    ]
+    polygons = [element for element in root.iter() if element.tag.endswith("polygon")]
 
     assert len(polygons) > 0
     assert all(polygon.attrib["fill"] == "#ff0000" for polygon in polygons)
