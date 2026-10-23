@@ -86,3 +86,19 @@ def test_conversion_rejects_unknown_shape(tmp_path: Path) -> None:
 
     with pytest.raises(ValueError, match="shape"):
         convert_image_to_svg(input_path, output_path, radius=5, shape="circle")
+
+
+def test_conversion_uses_custom_palette(tmp_path: Path) -> None:
+    input_path = tmp_path / "input.png"
+    output_path = tmp_path / "output.svg"
+    Image.new("RGB", (20, 20), (20, 20, 20)).save(input_path)
+
+    convert_image_to_svg(
+        input_path,
+        output_path,
+        radius=5,
+        palette=[(0, 0, 0), (255, 255, 255)],
+    )
+
+    svg = output_path.read_text(encoding="utf-8")
+    assert 'fill="#000000"' in svg
