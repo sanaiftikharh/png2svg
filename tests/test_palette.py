@@ -1,4 +1,5 @@
 import pytest
+
 from png2svg.palette import map_to_palette
 
 
