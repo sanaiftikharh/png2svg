@@ -2,7 +2,7 @@ import math
 
 import pytest
 
-from png2svg.geometry import hexagon_vertices
+from png2svg.geometry import hexagon_vertices, triangle_vertices
 
 
 def test_returns_six_vertices():
@@ -48,3 +48,31 @@ def test_rejects_non_positive_radius():
 
     with pytest.raises(ValueError):
         hexagon_vertices(cx=0, cy=0, radius=-1)
+
+
+def test_triangle_vertices_returns_three_points() -> None:
+    vertices = triangle_vertices(10, 20, 5)
+
+    assert len(vertices) == 3
+
+
+def test_triangle_vertices_are_equilateral() -> None:
+    vertices = triangle_vertices(10, 20, 5)
+
+    def distance(
+        first: tuple[float, float],
+        second: tuple[float, float],
+    ) -> float:
+        return ((first[0] - second[0]) ** 2 + (first[1] - second[1]) ** 2) ** 0.5
+
+    assert distance(vertices[0], vertices[1]) == pytest.approx(
+        distance(vertices[1], vertices[2])
+    )
+    assert distance(vertices[1], vertices[2]) == pytest.approx(
+        distance(vertices[2], vertices[0])
+    )
+
+
+def test_triangle_vertices_rejects_nonpositive_radius() -> None:
+    with pytest.raises(ValueError, match="positive"):
+        triangle_vertices(0, 0, 0)

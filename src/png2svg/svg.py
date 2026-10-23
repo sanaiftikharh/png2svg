@@ -36,8 +36,8 @@ def generate_svg(
     ]
 
     for vertices, color in hexagons:
-        if len(vertices) != 6:
-            raise ValueError("Each hexagon must have exactly six vertices.")
+        if len(vertices) not in (3, 6):
+            raise ValueError("Each polygon must have either three or six vertices.")
 
         if len(color) != 3 or any(
             not isinstance(channel, int) or not 0 <= channel <= 255 for channel in color
