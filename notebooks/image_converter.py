@@ -8,8 +8,10 @@ app = marimo.App(width="medium")
 
 @app.cell
 def _():
-    import marimo as mo
     from pathlib import Path
+
+    import marimo as mo
+
     from png2svg.conversion import convert_image_to_svg
 
     return Path, convert_image_to_svg, mo
@@ -29,7 +31,6 @@ def _(mo):
     4. Click **Convert image**.
     5. Compare the original image with the generated SVG.
     """)
-    return
 
 
 @app.cell
@@ -139,7 +140,6 @@ def _(
         output_items.append(comparison)
 
     mo.vstack(output_items, gap=2)
-    return
 
 
 if __name__ == "__main__":
