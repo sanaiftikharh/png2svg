@@ -97,3 +97,36 @@ def test_main_rejects_non_positive_radius(
 
     assert exc_info.value.code == 2
     assert not output_path.exists()
+
+
+def test_cli_grayscale_palette(tmp_path, monkeypatch):
+    input_path = tmp_path / "input.png"
+    output_path = tmp_path / "output.svg"
+    Image.new("RGB", (20, 20), (120, 80, 40)).save(input_path)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "png2svg",
+            str(input_path),
+            str(output_path),
+            "--palette",
+            "grayscale",
+        ],
+    )
+
+    main()
+
+    assert output_path.exists()
+    svg = output_path.read_text()
+    assert "#000000" in svg or "#808080" in svg or "#FFFFFF" in svg
+
+
+def test_cli_rejects_unknown_palette():
+    import pytest
+
+    from png2svg.cli import build_parser
+
+    parser = build_parser()
+    with pytest.raises(SystemExit):
+        parser.parse_args(["input.png", "output.svg", "--palette", "unknown"])
