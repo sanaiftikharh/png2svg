@@ -5,6 +5,12 @@ from pathlib import Path
 
 from png2svg.conversion import convert_image_to_svg
 
+PALETTES = {
+    "grayscale": [(0, 0, 0), (128, 128, 128), (255, 255, 255)],
+    "sunset": [(75, 0, 130), (220, 20, 60), (255, 165, 0)],
+    "ocean": [(0, 0, 128), (0, 128, 180), (135, 206, 235)],
+}
+
 
 def build_parser() -> argparse.ArgumentParser:
     """Build the command-line argument parser."""
@@ -35,6 +41,12 @@ def build_parser() -> argparse.ArgumentParser:
         default="hexagon",
         help="Mosaic shape: hexagon (default) or triangle.",
     )
+    parser.add_argument(
+        "--palette",
+        choices=tuple(PALETTES),
+        default=None,
+        help="Optional color palette: grayscale, sunset, or ocean.",
+    )
 
     return parser
 
@@ -52,11 +64,13 @@ def main() -> None:
 
     try:
         args.output_path.parent.mkdir(parents=True, exist_ok=True)
+        selected_palette = PALETTES[args.palette] if args.palette is not None else None
         convert_image_to_svg(
             args.input_path,
             args.output_path,
             radius=args.radius,
             shape=args.shape,
+            palette=selected_palette,
         )
     except (ValueError, OSError) as error:
         parser.error(str(error))
