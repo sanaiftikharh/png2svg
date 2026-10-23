@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from PIL import Image
+
 from png2svg.converter import PNGToSVGConverter
 
 
