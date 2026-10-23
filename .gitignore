@@ -13,6 +13,7 @@ wheels/
 #Others
 .coverage
 coverage.xml
+__marimo__
 
 # Manual testing scripts
 scripts/
