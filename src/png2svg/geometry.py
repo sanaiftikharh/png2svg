@@ -32,3 +32,37 @@ def hexagon_vertices(
         vertices.append((x, y))
 
     return vertices
+
+
+def triangle_vertices(
+    cx: float,
+    cy: float,
+    radius: float,
+    inverted: bool = False,
+) -> list[tuple[float, float]]:
+    """Calculate the three vertices of an equilateral triangle.
+
+    Args:
+        cx: X-coordinate of the triangle's center.
+        cy: Y-coordinate of the triangle's center.
+        radius: Distance from the center to each vertex.
+        inverted: Whether the triangle points downward.
+
+    Returns:
+        Three (x, y) vertex coordinates.
+
+    Raises:
+        ValueError: If radius is not positive.
+    """
+    if radius <= 0:
+        raise ValueError("Radius must be positive.")
+
+    start_angle = 90 if inverted else -90
+
+    return [
+        (
+            cx + radius * math.cos(math.radians(start_angle + i * 120)),
+            cy + radius * math.sin(math.radians(start_angle + i * 120)),
+        )
+        for i in range(3)
+    ]

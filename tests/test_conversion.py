@@ -1,10 +1,10 @@
+from pathlib import Path
 from xml.etree import ElementTree as ET
 
 import pytest
 from PIL import Image
 
 from png2svg.conversion import convert_image_to_svg
-from pathlib import Path
 
 
 def test_conversion_creates_svg_file(tmp_path) -> None:

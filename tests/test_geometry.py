@@ -2,8 +2,7 @@ import math
 
 import pytest
 
-from png2svg.geometry import hexagon_vertices
-from png2svg.geometry import triangle_vertices
+from png2svg.geometry import hexagon_vertices, triangle_vertices
 
 
 def test_returns_six_vertices():
@@ -64,10 +63,7 @@ def test_triangle_vertices_are_equilateral() -> None:
         first: tuple[float, float],
         second: tuple[float, float],
     ) -> float:
-        return (
-            (first[0] - second[0]) ** 2
-            + (first[1] - second[1]) ** 2
-        ) ** 0.5
+        return ((first[0] - second[0]) ** 2 + (first[1] - second[1]) ** 2) ** 0.5
 
     assert distance(vertices[0], vertices[1]) == pytest.approx(
         distance(vertices[1], vertices[2])

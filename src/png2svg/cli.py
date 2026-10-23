@@ -10,7 +10,7 @@ def build_parser() -> argparse.ArgumentParser:
     """Build the command-line argument parser."""
     parser = argparse.ArgumentParser(
         prog="png2svg",
-        description="Convert an image into a hexagonal SVG mosaic.",
+        description="Convert an image into a hexagonal or triangular SVG mosaic.",
     )
 
     parser.add_argument(
@@ -27,7 +27,13 @@ def build_parser() -> argparse.ArgumentParser:
         "--radius",
         type=float,
         default=10.0,
-        help="Radius of each hexagon (default: 10).",
+        help="Radius of each shape (default: 10).",
+    )
+    parser.add_argument(
+        "--shape",
+        choices=("hexagon", "triangle"),
+        default="hexagon",
+        help="Mosaic shape: hexagon (default) or triangle.",
     )
 
     return parser
@@ -50,6 +56,7 @@ def main() -> None:
             args.input_path,
             args.output_path,
             radius=args.radius,
+            shape=args.shape,
         )
     except (ValueError, OSError) as error:
         parser.error(str(error))
