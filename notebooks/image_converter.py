@@ -215,8 +215,7 @@ def _(
             except (ValueError, OSError) as error:
                 result_message = mo.md(f"**Conversion failed:** {error}")
 
-    result_message
-    return (result_path,)
+    return result_message, result_path
 
 
 @app.cell
