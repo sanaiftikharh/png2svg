@@ -1,6 +1,8 @@
+from collections.abc import Sequence
 from pathlib import Path
 
 from png2svg.geometry import hexagon_vertices, triangle_vertices
+from png2svg.palette import map_to_palette
 from png2svg.sampling import average_hexagon_color, load_image
 from png2svg.svg import generate_svg, save_svg
 
@@ -10,8 +12,10 @@ def convert_image_to_svg(
     output_path: str | Path,
     radius: float = 10,
     shape: str = "hexagon",
+    palette: Sequence[tuple[int, int, int]] | None = None,
 ) -> None:
     """Convert an image into a hexagonal or triangular SVG mosaic."""
+
     if radius <= 0:
         raise ValueError("Radius must be positive.")
 
@@ -36,6 +40,8 @@ def convert_image_to_svg(
             while cy < height:
                 vertices = hexagon_vertices(cx, cy, radius)
                 color = average_hexagon_color(image, cx, cy, radius)
+                if palette is not None:
+                    color = map_to_palette(color, palette)
                 polygons.append((vertices, color))
                 cy += vertical_step
 
