@@ -38,7 +38,6 @@ def _(mo):
     3. Select an optional color palette.
     4. Generate and compare the original image with the SVG output.
     """)
-    return
 
 
 @app.cell
@@ -108,6 +107,7 @@ def _(mo):
 @app.cell
 def _(input_image):
     from pathlib import Path
+
     selected_path = input_image.path(index=0)
 
     if selected_path is not None:
@@ -129,44 +129,30 @@ def _(
 ):
     result_path = None
 
-    result_message = mo.md(
-        "Select an image and click **Generate SVG mosaic**."
-    )
+    result_message = mo.md("Select an image and click **Generate SVG mosaic**.")
 
     if convert_button.value:
         if selected_path is None or not selected_path.is_file():
-            result_message = mo.md(
-                "**Input required:** Select an existing image."
-            )
+            result_message = mo.md("**Input required:** Select an existing image.")
 
         elif not output_path.value.strip():
-            result_message = mo.md(
-                "**Output required:** Enter an output filename."
-            )
+            result_message = mo.md("**Output required:** Enter an output filename.")
 
         elif radius.value is None or radius.value <= 0:
-            result_message = mo.md(
-                "**Invalid radius:** Choose a positive value."
-            )
+            result_message = mo.md("**Invalid radius:** Choose a positive value.")
 
         else:
             destination = Path(output_path.value.strip())
 
             try:
                 if destination.suffix.lower() != ".svg":
-                    raise ValueError(
-                        "The output filename must end in .svg."
-                    )
+                    raise ValueError("The output filename must end in .svg.")
 
                 if selected_path.resolve() == destination.resolve():
-                    raise ValueError(
-                        "The input and output paths must differ."
-                    )
+                    raise ValueError("The input and output paths must differ.")
 
                 if destination.exists() and destination.is_dir():
-                    raise ValueError(
-                        "The output path points to a directory."
-                    )
+                    raise ValueError("The output path points to a directory.")
 
                 palettes = {
                     "Grayscale": [
@@ -206,14 +192,10 @@ def _(
                 )
 
                 if not destination.is_file():
-                    raise ValueError(
-                        "The converter did not create an output file."
-                    )
+                    raise ValueError("The converter did not create an output file.")
 
                 if destination.stat().st_size == 0:
-                    raise ValueError(
-                        "The generated SVG file is empty."
-                    )
+                    raise ValueError("The generated SVG file is empty.")
 
                 result_path = destination
 
@@ -231,9 +213,7 @@ def _(
     """)
 
             except (ValueError, OSError) as error:
-                result_message = mo.md(
-                    f"**Conversion failed:** {error}"
-                )
+                result_message = mo.md(f"**Conversion failed:** {error}")
 
     result_message
     return (result_path,)
@@ -242,6 +222,7 @@ def _(
 @app.cell
 def _(mo, result_path, selected_path):
     import base64
+
     # Input preview
     if selected_path is not None and selected_path.is_file():
         input_mime_types = {
@@ -257,9 +238,7 @@ def _(mo, result_path, selected_path):
             "image/png",
         )
 
-        input_data = base64.b64encode(
-            selected_path.read_bytes()
-        ).decode("ascii")
+        input_data = base64.b64encode(selected_path.read_bytes()).decode("ascii")
 
         input_preview = mo.image(
             src=f"data:{input_mime};base64,{input_data}",
@@ -271,9 +250,7 @@ def _(mo, result_path, selected_path):
 
     # Output preview
     if result_path is not None and result_path.is_file():
-        svg_data = base64.b64encode(
-            result_path.read_bytes()
-        ).decode("ascii")
+        svg_data = base64.b64encode(result_path.read_bytes()).decode("ascii")
 
         output_preview = mo.image(
             src=f"data:image/svg+xml;base64,{svg_data}",
@@ -281,9 +258,7 @@ def _(mo, result_path, selected_path):
             width="100%",
         )
     else:
-        output_preview = mo.md(
-            "Click **Generate SVG mosaic** to create the output."
-        )
+        output_preview = mo.md("Click **Generate SVG mosaic** to create the output.")
 
     mo.vstack(
         [
@@ -312,7 +287,6 @@ def _(mo, result_path, selected_path):
         ],
         gap=2,
     )
-    return
 
 
 @app.cell
@@ -349,7 +323,6 @@ def _(distribute_palette, mo):
 
     **Result:** `{distribution}`
     """)
-    return
 
 
 if __name__ == "__main__":
