@@ -4,6 +4,7 @@ import pytest
 from PIL import Image
 
 from png2svg.conversion import convert_image_to_svg
+from pathlib import Path
 
 
 def test_conversion_creates_svg_file(tmp_path) -> None:
@@ -53,3 +54,35 @@ def test_conversion_rejects_missing_input(tmp_path) -> None:
             tmp_path / "output.svg",
             radius=5,
         )
+
+
+def test_conversion_supports_triangle_shape(tmp_path: Path) -> None:
+    input_path = tmp_path / "input.png"
+    output_path = tmp_path / "output.svg"
+    Image.new("RGB", (20, 20), (255, 0, 0)).save(input_path)
+
+    convert_image_to_svg(input_path, output_path, radius=5, shape="triangle")
+
+    svg = output_path.read_text(encoding="utf-8")
+    assert "<polygon" in svg
+    assert svg.count(",") > 0
+
+
+def test_conversion_keeps_hexagon_as_default(tmp_path: Path) -> None:
+    input_path = tmp_path / "input.png"
+    output_path = tmp_path / "output.svg"
+    Image.new("RGB", (20, 20), (255, 0, 0)).save(input_path)
+
+    convert_image_to_svg(input_path, output_path, radius=5)
+
+    svg = output_path.read_text(encoding="utf-8")
+    assert "<polygon" in svg
+
+
+def test_conversion_rejects_unknown_shape(tmp_path: Path) -> None:
+    input_path = tmp_path / "input.png"
+    output_path = tmp_path / "output.svg"
+    Image.new("RGB", (20, 20), (255, 0, 0)).save(input_path)
+
+    with pytest.raises(ValueError, match="shape"):
+        convert_image_to_svg(input_path, output_path, radius=5, shape="circle")
