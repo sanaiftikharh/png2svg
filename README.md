@@ -334,14 +334,6 @@ docs: add complete project usage guide
 test: cover triangle clipping behavior
 ```
 
-## Limitations
-
-- The output is a mosaic approximation; it does not preserve photographic detail at low radius values.
-- A custom palette reduces every sampled color to the nearest palette member.
-- The SVG contains flat polygon colors rather than embedded raster data.
-- Large images and small radius values produce many polygons and larger SVG files.
-- `radius` controls shape size and visual density; it is not a pixel-sampling count.
-
 ## Author
 
 **Sana Iftikhar**
