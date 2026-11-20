@@ -94,17 +94,17 @@ usage: png2svg [-h] [--radius RADIUS] [--shape {hexagon,triangle}]
 
 ### Required arguments
 
-| Argument | Description |
-|---|---|
-| `input_path` | Existing raster image to convert |
+| Argument      | Description                            |
+| ------------- | -------------------------------------- |
+| `input_path`  | Existing raster image to convert       |
 | `output_path` | Destination for the generated SVG file |
 
 ### Optional arguments
 
-| Option | Values | Default | Description |
-|---|---|---|:---:|
-| `--radius` | Positive number | `10` | Radius used to generate and sample each shape |
-| `--shape` | `hexagon`, `triangle` | `hexagon` | Geometric shape used in the mosaic |
+| Option      | Values                         | Default    |                       Description                        |
+| ----------- | ------------------------------ | ---------- | :------------------------------------------------------: |
+| `--radius`  | Positive number                | `10`       |      Radius used to generate and sample each shape       |
+| `--shape`   | `hexagon`, `triangle`          | `hexagon`  |            Geometric shape used in the mosaic            |
 | `--palette` | `grayscale`, `sunset`, `ocean` | No palette | Maps each sampled RGB color to the nearest palette color |
 
 Examples:
@@ -341,10 +341,6 @@ test: cover triangle clipping behavior
 - The SVG contains flat polygon colors rather than embedded raster data.
 - Large images and small radius values produce many polygons and larger SVG files.
 - `radius` controls shape size and visual density; it is not a pixel-sampling count.
-
-## License
-
-This repository does not currently include a license file. An explicit license should be added before the project is redistributed or published as an open-source package.
 
 ## Author
 
