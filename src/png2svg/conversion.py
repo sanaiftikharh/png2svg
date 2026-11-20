@@ -3,7 +3,7 @@ from pathlib import Path
 
 from png2svg.geometry import hexagon_vertices, triangle_vertices
 from png2svg.palette import map_to_palette
-from png2svg.sampling import average_hexagon_color, load_image
+from png2svg.sampling import average_hexagon_color, average_triangle_color, load_image
 from png2svg.svg import generate_svg, save_svg
 
 
@@ -39,7 +39,14 @@ def convert_image_to_svg(
 
             while cy < height:
                 vertices = hexagon_vertices(cx, cy, radius)
-                color = average_hexagon_color(image, cx, cy, radius)
+                try:
+                    color = average_hexagon_color(image, cx, cy, radius)
+                except ValueError as error:
+                    if str(error) == "No image pixels fall inside the hexagon.":
+                        cx += horizontal_step
+                        column += 1
+                        continue
+                    raise
                 if palette is not None:
                     color = map_to_palette(color, palette)
                 polygons.append((vertices, color))
@@ -68,7 +75,23 @@ def convert_image_to_svg(
                     radius,
                     inverted=inverted,
                 )
-                color = average_hexagon_color(image, cx, cy, radius)
+                try:
+                    color = average_triangle_color(
+                        image,
+                        cx,
+                        cy,
+                        radius,
+                        inverted=inverted,
+                    )
+                except ValueError as error:
+                    if str(error) == "No image pixels fall inside the triangle.":
+                        cx += horizontal_step
+                        column += 1
+                        continue
+                    raise
+
+                if palette is not None:
+                    color = map_to_palette(color, palette)
                 polygons.append((vertices, color))
                 cx += horizontal_step
                 column += 1

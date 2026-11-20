@@ -102,3 +102,19 @@ def test_conversion_uses_custom_palette(tmp_path: Path) -> None:
 
     svg = output_path.read_text(encoding="utf-8")
     assert 'fill="#000000"' in svg
+
+
+def test_triangle_conversion_skips_shapes_outside_image(tmp_path: Path) -> None:
+    input_path = tmp_path / "input.png"
+    output_path = tmp_path / "output.svg"
+
+    Image.new("RGB", (20, 20), (255, 0, 0)).save(input_path)
+
+    convert_image_to_svg(
+        input_path,
+        output_path,
+        radius=5,
+        shape="triangle",
+    )
+
+    assert output_path.is_file()
