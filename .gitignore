@@ -20,3 +20,6 @@ scripts/
 
 # Generated SVG files
 output/
+site/
+
+.github/workflows/deploy-pages.yml
