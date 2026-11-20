@@ -118,3 +118,15 @@ def test_triangle_conversion_skips_shapes_outside_image(tmp_path: Path) -> None:
     )
 
     assert output_path.is_file()
+
+
+def test_conversion_creates_missing_output_directory(tmp_path: Path) -> None:
+    input_path = tmp_path / "input.png"
+    output_path = tmp_path / "results" / "nested" / "output.svg"
+
+    Image.new("RGB", (20, 20), (255, 0, 0)).save(input_path)
+
+    convert_image_to_svg(input_path, output_path)
+
+    assert output_path.is_file()
+    assert output_path.stat().st_size > 0

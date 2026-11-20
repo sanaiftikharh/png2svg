@@ -63,9 +63,7 @@ def format_coordinate(value: float) -> str:
     return f"{value:g}"
 
 
-def save_svg(
-    svg_content: str,
-    output_path: str | Path,
-) -> None:
-    """Save SVG content to a file."""
-    Path(output_path).write_text(svg_content, encoding="utf-8")
+def save_svg(svg_content: str, output_path: str | Path) -> None:
+    destination = Path(output_path)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_text(svg_content, encoding="utf-8")
