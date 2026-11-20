@@ -1,3 +1,12 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "marimo>=0.25.1",
+#     "png2svg==0.1.0",
+#     "pillow>=12.3.0; sys_platform != 'emscripten'",
+# ]
+# ///
+
 """Interactive PNG-to-SVG Mosaic Studio.
 
 Features:
